@@ -1,4 +1,4 @@
-FROM alpine:3.18.3 AS stage
+FROM alpine AS stage
 LABEL maintainer="Nicolas Favre-Felix <n.favrefelix@gmail.com>"
 
 RUN apk update && apk add wget make gcc libevent-dev msgpack-c-dev musl-dev openssl-dev bsd-compat-headers jq
@@ -9,7 +9,7 @@ RUN cd webdis-$(cat latest) && make && make install && make clean && make SSL=1 
 RUN sed -i -e 's/"daemonize":.*true,/"daemonize": false,/g' /etc/webdis.prod.json
 
 # main image
-FROM alpine:3.18.3
+FROM alpine
 # Required dependencies, with versions fixing known security vulnerabilities
 RUN apk update && apk add libevent msgpack-c openssl \
     'redis>=6.2.10' 'libssl3>=3.0.10-r0' 'libcrypto3>=3.0.10-r0' \
