@@ -11,6 +11,7 @@ FROM alpine
 # Required dependencies, with versions fixing known security vulnerabilities
 RUN apk update && apk add libevent msgpack-c openssl redis libssl3 libcrypto3 libressl-dev && \
     rm -f /var/cache/apk/* /usr/bin/redis-benchmark /usr/bin/redis-cli
+COPY --from=stage /usr/local/bin/webdis /usr/local/bin/
 COPY --from=stage /etc/webdis.prod.json /etc/webdis.prod.json
 RUN echo "daemonize yes" >> /etc/redis.conf
 CMD /usr/bin/redis-server /etc/redis.conf && /usr/local/bin/webdis /etc/webdis.prod.json
