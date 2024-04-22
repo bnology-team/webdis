@@ -147,6 +147,7 @@ ws_handshake_reply(struct ws_client *ws) {
 	size_t origin_sz = 0, host_sz = 0, handshake_sz = 0, sz;
 
 	char template_start[] = "HTTP/1.1 101 Switching Protocols\r\n"
+		"Access-Control-Allow-Origin: *\r\n"
 		"Upgrade: websocket\r\n"
 		"Connection: Upgrade";
 	char template_accept[] = "\r\n" /* just after the start */
